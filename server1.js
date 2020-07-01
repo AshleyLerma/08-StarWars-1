@@ -42,30 +42,37 @@ app.get("/", function (req, res) {
   res.send("Welcome to the Star Wars Page!");
 });
 
-// What does this route do?
+// Displays all characters
 app.get("/api/characters", function (req, res) {
   return res.json(characters);
 });
 
-// What does this route do?
+// Displays a single character, or shows "No character found"
 app.get("/api/characters/:character", function (req, res) {
-  // What does this code do?
   var chosen = req.params.character;
+
   console.log(chosen);
 
-  // What does this code do?
   for (var i = 0; i < characters.length; i++) {
     if (chosen === characters[i].routeName) {
       return res.json(characters[i]);
     }
   }
 
-  // What does this code do?
   return res.send("No character found");
 });
 
-// Listener
-// ===========================================================
+// Create New Characters - takes in JSON input
+app.post("/api/characters", function (req, res) {
+  var newCharacter = req.body;
+
+  console.log(newCharacter);
+
+  characters.push(newCharacter);
+
+  res.json(newCharacter);
+});
+
 app.listen(PORT, function () {
   console.log("App listening on PORT " + PORT);
 });
